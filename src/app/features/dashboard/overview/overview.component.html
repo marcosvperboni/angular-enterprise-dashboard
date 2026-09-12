@@ -1,0 +1,25 @@
+<h1 class="page-title">Visão geral</h1>
+
+<div class="stats-grid">
+  <app-stat-card icon="group" [value]="stats()?.totalUsers ?? '—'" label="Usuários cadastrados" />
+  <app-stat-card icon="check_circle" [value]="stats()?.activeUsers ?? '—'" label="Usuários ativos" />
+  <app-stat-card icon="admin_panel_settings" [value]="stats()?.admins ?? '—'" label="Administradores" />
+  <app-stat-card icon="trending_up" [value]="stats()?.newThisMonth ?? '—'" label="Acessos recentes (15d)" />
+</div>
+
+<div class="charts-grid">
+  @if (chartData(); as chart) {
+    <app-chart-card
+      title="Acessos por mês"
+      type="line"
+      [labels]="chart.accessByMonth.labels"
+      [data]="chart.accessByMonth.data"
+    />
+    <app-chart-card
+      title="Distribuição por perfil"
+      type="doughnut"
+      [labels]="chart.roleDistribution.labels"
+      [data]="chart.roleDistribution.data"
+    />
+  }
+</div>

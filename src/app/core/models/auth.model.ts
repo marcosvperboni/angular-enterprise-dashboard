@@ -1,0 +1,20 @@
+import { Role } from './role.enum';
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  accessToken: string;
+  expiresIn: number;
+}
+
+export interface JwtPayload {
+  sub: string;
+  name: string;
+  email: string;
+  role: Role;
+  iat: number;
+  exp: number;
+}

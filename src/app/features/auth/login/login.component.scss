@@ -1,0 +1,137 @@
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  background: var(--mat-sys-surface-container-lowest);
+}
+
+.login-panel {
+  flex: 1.1;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  background: linear-gradient(135deg, var(--mat-sys-primary), var(--mat-sys-tertiary));
+  color: var(--mat-sys-on-primary);
+
+  @media (min-width: 900px) {
+    display: flex;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .subtitle {
+    max-width: 28rem;
+    opacity: 0.9;
+    line-height: 1.5;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.brand-icon {
+  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+}
+
+.login-form-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 26rem;
+  padding: 0.5rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--mat-sys-error);
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.submit-button {
+  height: 2.75rem;
+  margin-top: 0.5rem;
+}
+
+.demo-accounts {
+  margin-top: 1.75rem;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  padding-top: 1rem;
+}
+
+.demo-title {
+  font-size: 0.8rem;
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0 0 0.5rem;
+}
+
+.demo-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  border: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  text-align: left;
+
+  &:hover {
+    background: var(--mat-sys-surface-container-high);
+  }
+
+  mat-icon {
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}

@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>{{ data.mode === 'create' ? 'Novo usuário' : 'Editar usuário' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content class="form-content">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" />
+      @if (form.controls.name.touched && form.controls.name.invalid) {
+        <mat-error>Informe um nome com ao menos 3 caracteres.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>E-mail</mat-label>
+      <input matInput formControlName="email" />
+      @if (form.controls.email.touched && form.controls.email.invalid) {
+        <mat-error>Informe um e-mail válido.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Departamento</mat-label>
+      <input matInput formControlName="department" />
+      @if (form.controls.department.touched && form.controls.department.invalid) {
+        <mat-error>Informe o departamento.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Perfil</mat-label>
+      <mat-select formControlName="role">
+        @for (role of roles; track role) {
+          <mat-option [value]="role">{{ role }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="ACTIVE">Ativo</mat-option>
+        <mat-option value="INACTIVE">Inativo</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" [mat-dialog-close]="false">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="saving()">
+      {{ saving() ? 'Salvando...' : 'Salvar' }}
+    </button>
+  </mat-dialog-actions>
+</form>
