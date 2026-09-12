@@ -1,0 +1,111 @@
+<div class="page-header">
+  <h1 class="page-title">Usuários</h1>
+  @if (canEdit()) {
+    <button mat-flat-button color="primary" (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon>
+      Novo usuário
+    </button>
+  }
+</div>
+
+<form [formGroup]="filterForm" class="filters">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Buscar por nome ou e-mail</mat-label>
+    <input matInput formControlName="search" />
+    <mat-icon matPrefix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Perfil</mat-label>
+    <mat-select formControlName="role">
+      <mat-option value="">Todos</mat-option>
+      @for (role of roles; track role) {
+        <mat-option [value]="role">{{ role }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option value="">Todos</mat-option>
+      <mat-option value="ACTIVE">Ativo</mat-option>
+      <mat-option value="INACTIVE">Inativo</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<div class="table-card">
+  @if (loading()) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+
+  <table mat-table matSort [dataSource]="pageResult()?.items ?? []" (matSortChange)="onSortChange($event)">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+      <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>E-mail</th>
+      <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Perfil</th>
+      <td mat-cell *matCellDef="let user">
+        <mat-chip-set>
+          <mat-chip>{{ user.role }}</mat-chip>
+        </mat-chip-set>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Departamento</th>
+      <td mat-cell *matCellDef="let user">{{ user.department }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let user">
+        <span class="status-dot" [class.inactive]="user.status === 'INACTIVE'"></span>
+        {{ user.status === 'ACTIVE' ? 'Ativo' : 'Inativo' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastAccess">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Último acesso</th>
+      <td mat-cell *matCellDef="let user">{{ user.lastAccess | date: 'dd/MM/yyyy' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let user">
+        @if (canEdit()) {
+          <button mat-icon-button (click)="openEditDialog(user)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+        }
+        @if (canDelete()) {
+          <button mat-icon-button color="warn" (click)="confirmDelete(user)" matTooltip="Remover">
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell empty-state" [attr.colspan]="displayedColumns.length">Nenhum usuário encontrado.</td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    [length]="pageResult()?.total ?? 0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPage($event)"
+  />
+</div>
